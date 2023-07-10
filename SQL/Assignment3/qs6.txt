@@ -1,0 +1,17 @@
+CREATE DATABASE ONLINE_BOOKSTORE;
+USE ONLINE_BOOKSTORE
+CREATE TABLE  books(book_name varchar(60),auther_id int identity(2,1) PRIMARY KEY,
+auther_name varchar(60),Pen_Name varchar(60),
+publisher_name varchar(50),
+published_year int, created_on DATETIME DEFAULT GETDATE());
+INSERT INTO books VALUES ('The Da Vinci Code',  'Dan Brown', 'Robert Langdon', 'Doubleday', 2003, '2023-07-10 03:15:32');
+
+INSERT INTO books VALUES ('The Girl with the Dragon Tattoo',  'Stieg Larsson', 'Kurt Wallander', 'Quercus', 2005, '2023-07-10 03:15:32');
+
+INSERT INTO books VALUES ('Harry Potter and the Sorcerer''s Stone',  'J.K. Rowling', 'Robert Galbraith', 'Bloomsbury', 1997, '2023-07-10 03:15:32');
+
+
+
+
+SELECT*FROM books;
+DROP TABLE books;
