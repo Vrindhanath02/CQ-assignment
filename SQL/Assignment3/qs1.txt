@@ -1,0 +1,22 @@
+CREATE TABLE Students(
+Id INT,
+[Name]VARCHAR(20),
+Marks INT);
+
+
+INSERT INTO Students VALUES(1,'Arya',80);
+INSERT INTO Students VALUES(2,'Remya',60); 
+INSERT INTO Students VALUES(3,'Soumya',70);
+INSERT INTO Students VALUES(4,'Mohan',NULL);
+INSERT INTO Students VALUES(5,'Mahima',NULL);
+INSERT INTO Students VALUES(4,'Rohan',10);
+
+SELECT*FROM Students
+
+select Id,name,case
+when Marks >=90 then 'A' 
+when Marks >=80 then 'B'
+when Marks >=70 then 'C'
+when Marks >=60 then 'D'
+when Marks >=50 then 'E'
+ELSE 'F' END AS grade from students

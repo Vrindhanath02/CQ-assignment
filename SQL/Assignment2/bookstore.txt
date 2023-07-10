@@ -1,0 +1,18 @@
+
+CREATE TABLE Book
+(
+Book_no int,
+Book_name varchar(100),
+Publisher_Id int,
+Publisher_name varchar(100),
+Published_year int);
+
+
+INSERT INTO Book VALUES(1,'The Da Vinci Code' , 11  , ' Random House ' ,2003);
+INSERT INTO Book VALUES(2, 'Harry Potter and the Sorcerers Stone ', 12 , 'Bloomsbury' , 1997); 
+INSERT INTO Book VALUES(3,' The Lord of the Rings: The Fellowship of the Ring ', 13, 'Houghton Mifflin' , 1954);
+INSERT INTO Book VALUES(4,'To Kill a Mockingbird', 14 ,'HarperCollins'  ,1960);
+
+SELECT * FROM Book;
+
+DROP TABLE Book

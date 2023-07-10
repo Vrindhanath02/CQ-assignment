@@ -1,0 +1,9 @@
+CREATE DATABASE MALAYALAM;
+USE MALAYALAM;
+
+CREATE TABLE Malayalam_names
+(
+name_english VARCHAR(100),
+name_malayalam NVARCHAR(100));
+SELECT *FROM Malayalam_names
+INSERT INTO Malayalam_names(name_english,name_malayalam )VALUES('VRINDHA',N'വൃന്ദ');
