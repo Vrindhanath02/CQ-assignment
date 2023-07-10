@@ -12,5 +12,3 @@ VALUES ('This is a 10000 character string.');
 SELECT * FROM SENTENCE
 
 DROP TABLE SENTENCE;
-
-
