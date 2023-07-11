@@ -1,0 +1,28 @@
+CREATE TABLE Employee (
+  intern_id INT PRIMARY KEY,
+  intern_name VARCHAR(50),
+  joiningdate DATETIMEOFFSET
+);
+DROP TABLE Employee;
+
+INSERT INTO Employee (intern_id, intern_name, joiningdate)
+VALUES
+  (1, 'VRINDHA', GETUTCDATE()),
+  (2, 'GAYATHRI', GETUTCDATE()),
+  (3, 'RENU', GETUTCDATE());
+
+
+  --Employee table with field OF joining date in two time zones - India and New York
+
+  SELECT * FROM SYS.time_zone_info
+
+  SELECT *,
+  joiningdate AT TIME ZONE 'India Standard Time' AS ConvertedDateTimeINDIA,
+  joiningdate AT TIME ZONE 'Eastern Standard Time' AS ConvertedDateTimeNewYork
+  FROM Employee;
+
+  -- total no. of days each intern has joined
+
+  SELECT *,
+    DATEDIFF(DAY, joiningdate, GETDATE()) AS TotalDayseJoin 
+FROM Employee
