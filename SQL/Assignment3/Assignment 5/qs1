@@ -1,0 +1,35 @@
+CREATE DATABASE EM
+USE EM
+CREATE TABLE employee_table
+(employee_id  INT IDENTITY(1,1) PRIMARY KEY,
+employee_name varchar(20),
+joiningdate DATETIMEOFFSET);
+INSERT INTO employee_table VALUES ('John Xavier',SYSDATETIMEOFFSET());
+INSERT INTO employee_table VALUES('Michael  John',SYSDATETIMEOFFSET());
+INSERT INTO employee_table VALUES('Arun',SYSDATETIMEOFFSET());
+INSERT INTO employee_table VALUES('Alex',SYSDATETIMEOFFSET());
+INSERT INTO employee_table VALUES('Deo',SYSDATETIMEOFFSET());
+
+
+select * from employee_table
+DROP TABLE employee_table
+
+--Display all records who’s name starts with John
+SELECT* FROM employee_table
+WHERE [employee_name] LIKE 'John%'
+
+--Display all records who’s name end with John
+SELECT* FROM employee_table 
+WHERE [employee_name] LIKE '%John'
+
+--Display all records who’s name have John ( can be any where )
+SELECT* FROM employee_table
+WHERE [employee_name] LIKE '%John%'
+
+--Display all records who’s name starts with A and ends with n
+SELECT* FROM employee_table
+WHERE [employee_name] LIKE 'A%n'
+
+--Display all records who have alex or deo any where in name column
+SELECT* FROM employee_table 
+WHERE [employee_name] LIKE '%alex%' OR  [employee_name] LIKE '%deo%'
