@@ -1,0 +1,71 @@
+
+
+CREATE DATABASE BookS;
+
+USE BookS;
+
+CREATE TABLE BookData_table (
+  BookID INT NOT NULL IDENTITY(1,1) CONSTRAINT PK_BookDatatable PRIMARY KEY(BookID),
+  Title VARCHAR(100) NOT NULL,
+  Author VARCHAR(100),
+  PublicationYear SMALLINT,
+  Genre VARCHAR(50),
+  BookSeller VARCHAR(100),
+  [Language] VARCHAR(50),
+  CreatedOn DATE DEFAULT GETDATE(),
+  CreatedOnDATETIME DATETIME DEFAULT GETDATE(),
+  
+);
+DROP TABLE BookData_table;
+ 
+INSERT INTO BookData_table VALUES ('The Hitchhiker''s Guide to the Galaxy', 'Douglas Adams', 1979,'Science Fiction','Amazon', 'English',  GETDATE(),  GETDATE());
+
+INSERT INTO BookData_table VALUES ('The Lord of the Rings', 'J.R.R. Tolkien', 1954,'Fantasy', 'Barnes & Noble',  'English',  GETDATE(),  GETDATE());
+
+INSERT INTO BookData_table VALUES ('Harry Potter and the Sorcerer''s Stone', 'J.K. Rowling', 1997, 'Fantasy','Waterstones',  'English',  GETDATE(),  GETDATE());
+
+INSERT INTO BookData_table VALUES ('To Kill a Mockingbird', 'Harper Lee', 1960,'Drama', 'Book Depository',  'English', GETDATE(),  GETDATE());
+
+
+SELECT *FROM BookData_table;
+
+
+
+GO
+-- Display the incremented id value
+SELECT SCOPE_IDENTITY() AS incremented_id;
+ 
+ --Display date in DD-MM-YYYY format
+ SELECT *,
+FORMAT(CreatedOn, 'dd-MM-yyyy') AS date2
+FROM BookData_table;
+
+--date only
+
+ SELECT *,
+FORMAT(CreatedOn, 'dd') AS date_only
+FROM BookData_table;
+
+
+
+--Adding a monday
+INSERT INTO BookData_table (Title, Author, PublicationYear, Genre, BookSeller, [Language], CreatedOn, CreatedOnDATETIME)
+VALUES
+( 'The Da Vinci Code', 'Dan Brown', 2003, 'Thriller', 'Barnes & Noble', 'English', '2022-10-01', '2022-10-01 13:25:07.480');
+
+
+
+-- Display the no. of books arrived during the last year  
+SELECT COUNT(*) AS BooksArrived2022
+FROM BookData_table
+WHERE YEAR(CreatedOn) = '2022'
+
+
+
+
+-- Display the no. of books arrived on every Monday during the last year
+
+SELECT COUNT(*) AS BooksArrivedOnMondays2022
+ FROM BookData_table
+ WHERE DATEPART(weekday, CreatedOn) = 2 -- Monday
+ AND YEAR(CreatedOn) ='2022'
