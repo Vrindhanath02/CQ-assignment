@@ -1,0 +1,82 @@
+-1.Show the CompanyName for James D. Kramer
+
+USE AdventureWorksLT2019
+
+SELECT *FROM [SalesLT].[Customer]
+
+
+SELECT FirstName,MiddleName,LastName,CompanyName
+FROM SalesLT.Customer
+WHERE FirstName ='James'
+AND MiddleName='D.'
+AND Lastname='Kramer';
+
+
+
+
+
+--2.Show all the addresses listed for company 'Modular Cycle Systems' 
+
+SELECT CompanyName,AddressType,AddressLine1,AddressLine2
+FROM [SalesLT].[Customer] JOIN [SalesLT].[CustomerAddress]
+ON ( SalesLT.Customer.CustomerID=SalesLT.CustomerAddress.CustomerID)
+JOIN [SalesLT].[Address]
+ON (SalesLT.CustomerAddress.AddressID=SalesLT.Address.AddressID)
+WHERE CompanyName='Modular Cycle Systems' ;
+
+
+--3.Show OrderQty, the Product Name and the Product ListPrice of the order made by CustomerID 635 or 30025
+
+SELECT OrderQty,Name, ListPrice,CustomerID
+FROM [SalesLT].[Product] JOIN [SalesLT].[SalesOrderDetail]
+ON (SalesLT.Product.ProductID)=(SalesLT.SalesOrderDetail.ProductID)
+JOIN [SalesLT].[SalesOrderHeader]
+ON (SalesLT.SalesOrderDetail.SalesOrderID)=(SalesLT.SalesOrderHeader.SalesOrderID)
+WHERE CustomerID = '635' OR CustomerID= '30025';
+
+--4.Show the first name and the email address of customer with CompanyName 'Bike World'
+
+SELECT FirstName,EmailAddress,CompanyName
+FROM [SalesLT].[Customer]
+WHERE CompanyName='Bike World';
+
+
+--5.Show the CompanyName for all customers with an address in City 'Dallas'.
+SELECT CompanyName,AddressType,AddressLine1,AddressLine2,City
+FROM [SalesLT].[Customer] JOIN [SalesLT].[CustomerAddress]
+ON ( SalesLT.Customer.CustomerID=SalesLT.CustomerAddress.CustomerID)
+JOIN [SalesLT].[Address]
+ON (SalesLT.CustomerAddress.AddressID=SalesLT.Address.AddressID)
+WHERE City= 'Dallas';
+
+
+ --6.How many items with ListPrice more than $1000 have been sold?
+
+ SELECT COUNT(*) AS Total
+ FROM [SalesLT].[Product] JOIN [SalesLT].[SalesOrderDetail]
+ ON SalesLT.Product.ProductID=SalesOrderDetail.ProductID
+ WHERE   Product.ListPrice > 1000;
+
+ --7.Give the CompanyName of those customers with orders over $100000. Include the subtotal plus tax plus freight.
+
+  SELECT CompanyName
+ FROM [SalesLT].[Customer] JOIN [SalesLT].[SalesOrderHeader]
+ ON SalesLT.Customer.CustomerID=SalesOrderHeader.CustomerID
+ WHERE   SalesOrderHeader.SubTotal + SalesOrderHeader.TaxAmt + SalesOrderHeader.Freight > 100000;
+
+
+
+ --8.Find the number of left racing socks ('Racing Socks, L') ordered by CompanyName 'Riding Cycles'
+  SELECT SUM([SalesLT].[SalesOrderDetail].OrderQty)
+  FROM [SalesLT].[SalesOrderDetail] JOIN [SalesLT].[Product] 
+  ON([SalesLT].[SalesOrderDetail].ProductID=[SalesLT].[Product].ProductID)
+  JOIN [SalesLT].[SalesOrderHeader]
+  ON ([SalesLT].[SalesOrderHeader].SalesOrderID=[SalesLT].[SalesOrderDetail].SalesOrderID)
+  JOIN [SalesLT].[Customer]
+  ON([SalesLT].[Customer].CustomerID=[SalesLT].[SalesOrderHeader].CustomerID)
+  WHERE [SalesLT].[Product].Name='Racing Socks, L' 
+  AND [SalesLT].[Customer].CompanyName='Riding Cycles'
+
+
+
+
