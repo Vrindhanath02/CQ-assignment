@@ -11,10 +11,6 @@ WHERE FirstName ='James'
 AND MiddleName='D.'
 AND Lastname='Kramer';
 
-
-
-
-
 --2.Show all the addresses listed for company 'Modular Cycle Systems' 
 
 SELECT CompanyName,AddressType,AddressLine1,AddressLine2
@@ -78,5 +74,22 @@ WHERE City= 'Dallas';
   AND [SalesLT].[Customer].CompanyName='Riding Cycles'
 
 
+  --9. “Single Item Order” is a customer order where only one item is ordered. Show the SalesOrderID and the UnitPrice for every Single Item Order.
+
+  SELECT SalesOrderID,UnitPrice
+  FROM [SalesLT].[SalesOrderDetail]
+  WHERE OrderQTY=1;
+
+  --10.Show the product description for culture ‘fr’ for product with ProductID 736.
+
+  SELECT  ProductID , Description,Culture
+  FROM [SalesLT].[Product] JOIN [SalesLT].[ProductModel]
+  ON (SalesLT.Product.ProductModelID)=(SalesLT.ProductModel.ProductModelID)
+  JOIN [SalesLT].[ProductModelProductDescription]
+  ON (SalesLT.Product.ProductModelID)=(SalesLT.ProductModelProductDescription.ProductModelID)
+  JOIN [SalesLT].[ProductDescription]
+  ON (SalesLT.ProductModelProductDescription.ProductDescriptionID)=(SalesLT.ProductDescription.ProductDescriptionID)
+  WHERE Culture='fr'
+  AND ProductID = '736';
 
 
