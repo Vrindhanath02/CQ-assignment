@@ -1,0 +1,109 @@
+ 
+ --1.  Use the SubTotal value in SaleOrderHeader to list orders from the largest to the smallest. For each order show the CompanyName and the SubTotal and the total weight of the order.
+ 
+ SELECT SubTotal,Name,OrderQty,OrderQty*Weight AS Totalweight
+
+ FROM [SalesLT].[Customer] JOIN  [SalesLT].[SalesOrderHeader]
+ ON (SalesLT.Customer.CustomerID) =  (SalesLT.SalesOrderHeader.CustomerID)
+JOIN [SalesLT].[SalesOrderDetail]
+  ON(SalesLT.SalesOrderHeader.SalesOrderID)=(SalesLT.SalesOrderDetail.SalesOrderID)
+  JOIN [SalesLT].[Product]
+ ON(SalesLT.SalesOrderDetail.ProductID)=(SalesLT.Product.ProductID)
+ ORDER BY Subtotal DESC;
+
+
+
+ --2. How many products in ProductCategory ‘Cranksets’ have been sold to an address in ‘London’?
+
+ SELECT count(*) AS Totalsoldcransets 
+  FROM [SalesLT].[ProductCategory] JOIN [SalesLT].[Product] 
+ ON( SalesLT.ProductCategory.ParentProductCategoryID)=(SalesLT.Product.ProductCategoryID)
+  JOIN [SalesLT].[SalesOrderDetail]
+  ON (SalesLT.Product.ProductID)=(SalesLT.SalesOrderDetail.ProductID)
+  JOIN [SalesLT].[SalesOrderHeader]
+  ON (SalesLT.SalesOrderDetail.SalesOrderID)=(SalesLT.SalesOrderHeader.SalesOrderID)
+  JOIN [SalesLT].[Customer]
+  ON (SalesLT.SalesOrderHeader.CustomerID)=(SalesLT.Customer.CustomerID)
+  JOIN [SalesLT].[CustomerAddress]
+  ON (SalesLT.Customer.CustomerID)=(SalesLT.CustomerAddress.CustomerID)
+  JOIN [SalesLT].[Address]
+  ON (SalesLT.CustomerAddress.AddressID)=(SalesLT.Address.AddressID) 
+  WHERE [SalesLT].[ProductCategory]. Name = 'Cranksets'
+  AND [SalesLT].[Address].City='London' ;
+
+
+  --1.  Use the SubTotal value in SaleOrderHeader to list orders from the largest to the smallest. For each order show the CompanyName and the SubTotal and the total weight of the order.
+
+
+ SELECT SubTotal,Name,OrderQty,OrderQty*Weight AS Totalweight
+
+ FROM [SalesLT].[Customer] JOIN  [SalesLT].[SalesOrderHeader]
+ ON (SalesLT.Customer.CustomerID) =  (SalesLT.SalesOrderHeader.CustomerID)
+JOIN [SalesLT].[SalesOrderDetail]
+  ON(SalesLT.SalesOrderHeader.SalesOrderID)=(SalesLT.SalesOrderDetail.SalesOrderID)
+  JOIN [SalesLT].[Product]
+ ON(SalesLT.SalesOrderDetail.ProductID)=(SalesLT.Product.ProductID)
+ ORDER BY Subtotal DESC;
+
+ --2. How many products in ProductCategory ‘Cranksets’ have been sold to an address in ‘London’?
+
+ SELECT count(*) AS Totalsoldcransets 
+  FROM [SalesLT].[ProductCategory] JOIN [SalesLT].[Product] 
+ ON( SalesLT.ProductCategory.ParentProductCategoryID)=(SalesLT.Product.ProductCategoryID)
+  JOIN [SalesLT].[SalesOrderDetail]
+  ON (SalesLT.Product.ProductID)=(SalesLT.SalesOrderDetail.ProductID)
+  JOIN [SalesLT].[SalesOrderHeader]
+  ON (SalesLT.SalesOrderDetail.SalesOrderID)=(SalesLT.SalesOrderHeader.SalesOrderID)
+  JOIN [SalesLT].[Customer]
+  ON (SalesLT.SalesOrderHeader.CustomerID)=(SalesLT.Customer.CustomerID)
+  JOIN [SalesLT].[CustomerAddress]
+  ON (SalesLT.Customer.CustomerID)=(SalesLT.CustomerAddress.CustomerID)
+  JOIN [SalesLT].[Address]
+  ON (SalesLT.CustomerAddress.AddressID)=(SalesLT.Address.AddressID) 
+  WHERE [SalesLT].[ProductCategory]. Name = 'Cranksets'
+  AND [SalesLT].[Address].City='London' ;
+
+ SELECT *
+ FROM [SalesLT].[ProductCategory]
+
+
+
+ --3.For every customer with a ‘Main Office’ in Dallas show AddressLine1 of the ‘Main Office’ and AddressLine1 of the ‘Shipping’ address - if there is no shipping address leave it blank. Use one row per customer.
+ -- Here Main Office and shipping is address type
+
+ SELECT c.FirstName,ad.AddressLine1,sha.AddressLine1
+FROM [SalesLT].[Address] AS ad INNER JOIN [SalesLT].[CustomerAddress] AS ca
+ON( ad.AddressID=ca.AddressID)
+INNER JOIN [SalesLT].[Customer] AS c
+ON(ca.CustomerID=c.CustomerID)
+AND AddressType='Main Office'
+AND City='Dallas'
+LEFT JOIN [SalesLT].[CustomerAddress]ship
+ON(c.CustomerID=ship.CustomerID)
+AND ship.AddressType='Shipping'
+LEFT JOIN [SalesLT].[Address]sha
+ON(sha.AddressID=ship.AddressID)
+
+--4.For each order show the SalesOrderID and SubTotal calculated  in three ways: 
+  -- A) From the SalesOrderHeader  (Order header table)
+  -- B) Sum of OrderQtyUnitPrice  ( Order Detail table ) 
+   --C) Sum of OrderQtyListPrice (Product table)
+
+
+SELECT [SalesLT].[SalesOrderHeader].SalesOrderID,
+  [SalesLT].[SalesOrderHeader].SubTotal,
+  SUM([SalesLT].[SalesOrderDetail].OrderQty * [SalesLT].[SalesOrderDetail].UnitPrice),
+  SUM([SalesLT].[SalesOrderDetail].OrderQty * [SalesLT].[Product] .ListPrice)
+FROM
+[SalesLT].[SalesOrderHeader]
+  JOIN
+  [SalesLT].[SalesOrderDetail]
+    ON SalesOrderHeader.SalesOrderID = SalesOrderDetail.SalesOrderID
+  JOIN
+   [SalesLT].[Product]
+    ON SalesOrderDetail.ProductID = Product.ProductID
+GROUP BY
+  SalesOrderHeader.SalesOrderID,
+  SalesOrderHeader.SubTotal;
+
+  
